@@ -1,0 +1,26 @@
+class Solution {
+    public int findPair(int n, int x, int[] arr) {
+        // code here
+        Arrays.sort(arr);
+    
+        int i = 0, j = 1;
+        while (i < n && j < n) {
+            int diff = arr[j] - arr[i];
+            
+            if (diff == x && i != j) {
+                return 1;
+            } 
+            // If the difference is smaller, increase j to widen the difference
+            else if (diff < x) {
+                j++;
+            } 
+            // If the difference is larger, increase i to reduce the difference
+            else {
+                i++;
+            }
+        }
+        
+        // If no pair found with the given difference
+        return -1;
+    }
+}
