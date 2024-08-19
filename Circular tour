@@ -1,0 +1,31 @@
+class Solution
+{
+    //Function to find the starting point where the truck can start to get through
+    //the complete circle without exhausting its petrol in between.
+    int tour(int petrol[], int distance[])
+    {
+        int total_fuel = 0, total_distance = 0;
+        
+        // Calculate total fuel and total distance
+        for(int i = 0; i < petrol.length; i++){
+            total_fuel += petrol[i];
+            total_distance += distance[i];
+        }
+        
+        // If the total fuel is less than the total distance, it's not possible to complete the circle
+        if(total_fuel < total_distance) return -1;
+        
+        int remaining_fuel = 0, idx = 0;
+        
+        // Find the starting point
+        for(int i = 0; i < petrol.length; i++){
+            remaining_fuel += petrol[i] - distance[i];
+            if(remaining_fuel < 0){
+                idx = i + 1;
+                remaining_fuel = 0;
+            }
+        }
+        
+        return idx;
+    }
+}
