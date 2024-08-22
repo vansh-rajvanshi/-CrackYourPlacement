@@ -1,0 +1,56 @@
+class Solution {
+    static void dfs(int i, int j, char[][] mat, boolean[][] visited) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        // Boundary conditions and if the cell is not 'O' or already visited
+        if (i < 0 || j < 0 || i >= n || j >= m || mat[i][j] == 'X' || visited[i][j]) {
+            return;
+        }
+
+        // Mark this cell as visited
+        visited[i][j] = true;
+
+        // Move in all four directions
+        dfs(i + 1, j, mat, visited); // Down
+        dfs(i - 1, j, mat, visited); // Up
+        dfs(i, j + 1, mat, visited); // Right
+        dfs(i, j - 1, mat, visited); // Left
+    }
+
+    static char[][] fill(int n, int m, char[][] mat) {
+        // Step 1: Create a visited array to track the cells we have processed
+        boolean[][] visited = new boolean[n][m];
+
+        // Step 2: Mark the 'O's that are connected to the border
+        for (int i = 0; i < n; i++) {
+            // First and last column
+            if (mat[i][0] == 'O' && !visited[i][0]) {
+                dfs(i, 0, mat, visited);
+            }
+            if (mat[i][m - 1] == 'O' && !visited[i][m - 1]) {
+                dfs(i, m - 1, mat, visited);
+            }
+        }
+        for (int j = 0; j < m; j++) {
+            // First and last row
+            if (mat[0][j] == 'O' && !visited[0][j]) {
+                dfs(0, j, mat, visited);
+            }
+            if (mat[n - 1][j] == 'O' && !visited[n - 1][j]) {
+                dfs(n - 1, j, mat, visited);
+            }
+        }
+
+        // Step 3: Replace all unvisited 'O's with 'X'
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (mat[i][j] == 'O' && !visited[i][j]) {
+                    mat[i][j] = 'X';
+                }
+            }
+        }
+
+        return mat;
+    }
+}
