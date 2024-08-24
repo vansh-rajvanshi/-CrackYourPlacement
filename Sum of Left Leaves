@@ -1,0 +1,20 @@
+class Solution {
+    private boolean isLeaf(TreeNode root) {
+        return root != null && root.left == null && root.right == null;
+    }
+    private int helper(TreeNode root) {
+        if (root == null) return 0;
+
+        int leafsum = 0;
+        if (isLeaf(root.left)) {
+            leafsum += root.left.val;
+        }
+        leafsum +=helper(root.left);
+        leafsum +=helper(root.right);
+        return leafsum;
+    }
+
+    public int sumOfLeftLeaves(TreeNode root) {
+        return helper(root);
+    }
+}
