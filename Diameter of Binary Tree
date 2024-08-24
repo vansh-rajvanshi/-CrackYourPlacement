@@ -1,0 +1,30 @@
+class Solution {
+    class Info {
+        int diam;
+        int ht;
+        
+        public Info(int diam, int ht) {
+            this.diam = diam;
+            this.ht = ht;
+        }
+    }
+    
+    public int diameterOfBinaryTree(TreeNode root) {
+        Info result = diameter(root);
+        return result.diam;
+    }
+    
+    private Info diameter(TreeNode root) {
+        if (root == null) {
+            return new Info(0, 0);
+        }
+        
+        Info leftInfo = diameter(root.left);
+        Info rightInfo = diameter(root.right);
+        
+        int height = Math.max(leftInfo.ht, rightInfo.ht) + 1;
+        int diameter = Math.max(Math.max(leftInfo.diam, rightInfo.diam), leftInfo.ht + rightInfo.ht);
+        
+        return new Info(diameter, height);
+    }
+}
