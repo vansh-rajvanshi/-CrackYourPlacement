@@ -1,0 +1,20 @@
+class Solution {
+    public TreeNode lca(TreeNode root, int k1, int k2) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val >= k1 && root.val <= k2) {
+            return root;
+        }
+        if (root.val > k1) {
+            return lca(root.left, k1, k2);
+        }
+        return lca(root.right, k1, k2);
+    }
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        int k1 = Math.min(p.val, q.val);
+        int k2 = Math.max(p.val, q.val);
+        
+        return lca(root, k1, k2);
+    }
+}
