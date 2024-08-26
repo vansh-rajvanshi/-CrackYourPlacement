@@ -1,0 +1,20 @@
+class Solution {
+    public int ways(int n, int[] way) {
+        if (n == 0) {
+            return 1;
+        }
+        if (n < 0) {
+            return 0;
+        }
+        if (way[n] != 0) {
+            return way[n];
+        }
+        way[n] = ways(n - 1, way) + ways(n - 2, way);
+        return way[n];
+    }
+
+    public int climbStairs(int n) {
+        int[] way = new int[n + 1];
+        return ways(n, way);
+    }
+}
