@@ -1,0 +1,39 @@
+class Solution {
+    public ListNode reverse(ListNode head){
+        ListNode prev=null;
+        ListNode curr=head;
+        while(curr!=null){
+            ListNode nextt=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=nextt;
+        }
+        return prev;
+    }
+    public ListNode middle(ListNode head){
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    public void reorderList(ListNode head) { 
+        if(head == null || head.next == null){
+            return;
+        }
+        ListNode mid=middle(head);
+        ListNode p1=head;
+        ListNode p2=reverse(mid.next);
+        mid.next=null;
+        while(p1!=null && p2!=null){
+            ListNode p1next=p1.next;
+            ListNode p2next=p2.next;
+            p1.next=p2;
+            p2.next=p1next;
+            p1=p1next;
+            p2=p2next;
+        }
+    }
+}
