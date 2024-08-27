@@ -1,0 +1,38 @@
+import java.util.Deque;
+import java.util.LinkedList;
+
+public class stack_queue_using_deque {
+    static Deque<Integer> deque=new LinkedList<>();
+    public static void addQueue(int data){
+        deque.addLast(data);
+        return;
+    }
+    public static int peek(){
+        return deque.getFirst();
+    }
+    public static int removeQueue(){
+        return deque.removeFirst();
+    }
+    public static void addStack(int data){
+        deque.addFirst(data);
+        return;
+    }
+    public static int removeStack(){
+        return deque.removeFirst();
+    }
+    public static void main(String[] args) {
+        addQueue(4);
+        addQueue(8);
+        addQueue(7);
+        System.out.println(peek());
+        System.out.println(removeQueue());
+        System.out.println(peek());
+        System.out.println();
+        addStack(4);
+        addStack(8);
+        addStack(7);
+        System.out.println(peek());
+        System.out.println(removeStack());
+        System.out.println(peek());
+    }
+}
