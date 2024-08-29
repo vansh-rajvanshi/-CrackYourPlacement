@@ -1,0 +1,45 @@
+class Solution {
+    private boolean knows(int mat[][],int a,int b){
+        if(mat[a][b]==1){
+            return true;
+        }
+        return false;
+    }
+    // Function to find if there is a celebrity in the party or not.
+    public int celebrity(int mat[][]) {
+        // code here
+        Stack<Integer> st=new Stack<>();
+        for(int i=0;i<mat.length;i++){
+            st.push(i);
+        }
+        while(st.size()>1){
+            int a=st.pop();
+            int b=st.pop();
+            if(knows(mat,a,b)){
+                st.push(b);
+            }else{
+                st.push(a);
+            }
+        }
+        int celeb=st.pop();
+        int zerocount=0;
+        for(int i=0;i<mat.length;i++){
+            if(mat[celeb][i]==0){
+                zerocount++;
+            }
+        }
+        if(zerocount!=mat.length){
+            return -1;
+        }
+        int oneCount=0;
+        for(int i=0;i<mat.length;i++){
+            if(mat[i][celeb]==1){
+                oneCount++;
+            }
+        }
+        if(oneCount!=mat.length-1){
+            return -1;
+        }
+        return celeb;
+    }
+}
