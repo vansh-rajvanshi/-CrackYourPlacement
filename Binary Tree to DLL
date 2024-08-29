@@ -1,0 +1,23 @@
+class Solution {
+    Node head = null;
+    Node tail = null;
+
+    // Function to convert binary tree to doubly linked list and return it.
+    Node bToDLL(Node root) {
+        if (root == null) return null;
+
+        bToDLL(root.left);
+
+        if(head==null){
+            head=tail=root;
+        }else{
+            root.left=tail;
+            tail.right=root;
+            tail=root;
+        }
+
+        bToDLL(root.right);
+
+        return head;
+    }
+}
