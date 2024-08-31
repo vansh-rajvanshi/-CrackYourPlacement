@@ -1,0 +1,20 @@
+class Solution {
+    public int size(ListNode head){
+        int n=0;
+        ListNode temp=head;
+        while(temp!=null){
+            n++;
+            temp=temp.next;
+        }
+        return n;
+    }
+    public int getDecimalValue(ListNode head) {
+        int size=size(head),sum=0;
+        ListNode temp=head;
+        while(temp!=null){
+            sum+=temp.val*Math.pow(2,--size);
+            temp=temp.next;
+        }
+        return sum;
+    }
+}
