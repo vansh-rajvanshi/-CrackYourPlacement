@@ -1,0 +1,40 @@
+class Solution {
+    private TreeNode prev = null;
+
+    public void flatten(TreeNode root) {
+        if(root==null){
+            return;
+        }
+        TreeNode curr=root;
+        while(curr!=null){
+            if(curr.left!=null){
+                TreeNode temp=curr.left;
+                while(temp.right!=null){
+                    temp=temp.right;
+                }
+                temp.right=curr.right;
+                curr.right=curr.left;
+                curr.left=null;
+            }
+            curr=curr.right;
+        }
+    }
+}
+
+
+/*with extra space*/
+
+class Solution {
+    private TreeNode prev = null;
+
+    public void flatten(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        flatten(root.right);  // Flatten the right subtree first
+        flatten(root.left);   // Then flatten the left subtree
+        root.right = prev;    // Point the right child to the previously processed node
+        root.left = null;     // Set the left child to null
+        prev = root;          // Move the next pointer to the current node
+    }
+}
