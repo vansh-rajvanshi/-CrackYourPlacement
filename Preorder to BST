@@ -1,0 +1,26 @@
+static class Solution {
+    int idx = 0;
+    
+    public Node Bst(int pre[], int size) {
+        return buildBST(pre, size, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    private Node buildBST(int[] pre, int size, int minValue, int maxValue) {
+        if (idx >= size) {
+            return null;
+        }
+        
+        int value = pre[idx];
+        
+        if (value < minValue || value > maxValue) {
+            return null;
+        }
+        
+        Node newNode = new Node(value);
+        idx++;
+        
+        newNode.left = buildBST(pre, size, minValue, value);
+        newNode.right = buildBST(pre, size, value, maxValue);
+        
+        return newNode;
+    }
+}
