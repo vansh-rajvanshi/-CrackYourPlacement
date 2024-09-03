@@ -1,0 +1,21 @@
+class BSTIterator {
+    Stack<TreeNode> st=new Stack<>();
+    public BSTIterator(TreeNode root) {
+        partialInorder(root);
+    }
+    void partialInorder(TreeNode root){
+        while(root!=null){
+            st.push(root);
+            root=root.left;
+        }
+    }
+    public int next() {
+        TreeNode ele=st.pop();
+        partialInorder(ele.right);
+        return ele.val;
+    }
+    
+    public boolean hasNext() {
+        return !st.isEmpty();
+    }
+}
