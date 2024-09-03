@@ -1,0 +1,56 @@
+class Solution {
+    public class Info implements Comparable<Info>{
+        int hd;
+        int level;
+        TreeNode node;
+        Info(int hd,int level,TreeNode node){
+            this.hd=hd;
+            this.level=level;
+            this.node=node;
+        }
+        public int compareTo(Info other) {
+            if (this.level == other.level) {
+                return this.node.val - other.node.val;
+            } else {
+                return this.level - other.level;
+            }
+        }
+    }
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        HashMap<Integer,PriorityQueue<Info>> map=new HashMap<>();
+        List<List<Integer>> result = new ArrayList<>();
+        Queue<Info> q=new LinkedList<>();
+        if(root==null){
+            return result;
+        }
+        q.add(new Info(0,0,root));
+        int minHd = 0, maxHd = 0;
+        while(!q.isEmpty()){
+            Info curr=q.remove();
+            int level=curr.level;
+            int hd=curr.hd;
+            if(!map.containsKey(hd)){
+                map.put(hd,new PriorityQueue<>());
+            }
+            map.get(hd).add(curr);
+            if (curr.node.left != null) {
+                q.add(new Info(hd - 1, level + 1, curr.node.left));
+                minHd = Math.min(minHd, hd - 1);
+            }
+            if (curr.node.right != null) {
+                q.add(new Info(hd + 1, level + 1, curr.node.right));
+                maxHd = Math.max(maxHd, hd + 1);
+            }
+        }
+        for (int i = minHd; i <= maxHd; i++) {
+            List<Integer> column = new ArrayList<>();
+            PriorityQueue<Info> pq = map.get(i);
+            while (!pq.isEmpty()) {
+                column.add(pq.remove().node.val);
+            }
+            result.add(column);
+        }
+
+        return result;
+    }
+}
