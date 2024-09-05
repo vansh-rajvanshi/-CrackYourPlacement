@@ -1,0 +1,49 @@
+import java.util.Arrays;
+import java.util.Collections;
+
+public class chocolaProblem {
+    public static int mincost(Integer[] hor, Integer[] ver) {
+        int h = 0, v = 0, hp = 1, vp = 1, cost = 0;
+
+        // Sort arrays in descending order
+        Arrays.sort(hor, Collections.reverseOrder());
+        Arrays.sort(ver, Collections.reverseOrder());
+
+        // Loop through both horizontal and vertical arrays
+        while (h < hor.length && v < ver.length) {
+            if (ver[v] <= hor[h]) {
+                cost += hor[h] * vp; // Multiply horizontal cut cost by vertical parts
+                hp++;
+                h++;
+            } else {
+                cost += ver[v] * hp; // Multiply vertical cut cost by horizontal parts
+                vp++;
+                v++;
+            }
+        }
+
+        // Process remaining horizontal cuts
+        while (h < hor.length) {
+            cost += hor[h] * vp;
+            hp++;
+            h++;
+        }
+
+        // Process remaining vertical cuts
+        while (v < ver.length) {
+            cost += ver[v] * hp;
+            vp++;
+            v++;
+        }
+
+        return cost;
+    }
+
+    public static void main(String[] args) {
+        int n = 4, m = 6;
+        Integer[] costHor = {4, 1, 2}; // Horizontal cuts
+        Integer[] costVer = {2, 1, 3, 1, 4}; // Vertical cuts
+
+        System.out.println(mincost(costHor, costVer)); // Output the minimum cost
+    }
+}
