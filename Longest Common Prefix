@@ -1,0 +1,47 @@
+class Solution {
+    public class Node {
+        Node[] children = new Node[26];
+        boolean eow = false;
+        int freq;
+        Node() {
+            for (int i = 0; i < children.length; i++) {
+                children[i] = null;
+            }
+            freq=1;
+        }
+    }
+    public Node root = new Node();
+    public void insert(String word) {
+        Node curr = root;
+        for (int level = 0; level < word.length(); level++) {
+            int idx = word.charAt(level) - 'a';
+            if (curr.children[idx] == null) {
+                curr.children[idx] = new Node();
+            }else{
+                curr.children[idx].freq++;
+            }
+            curr = curr.children[idx];
+        }
+        curr.eow = true;
+    }
+    StringBuilder str = new StringBuilder();
+    public void word(Node root,StringBuilder str,int n) {
+        if(root==null){
+            return;
+        }
+        for(int i=0;i<26;i++){
+            if(root.children[i]!=null && root.children[i].freq==n ){
+                str.append((char)(i+'a'));
+            }
+            word(root.children[i],str,n);
+        }
+    }
+    public String longestCommonPrefix(String[] strs) {
+        int n=strs.length;
+        for(int i=0;i<strs.length;i++){
+            insert(strs[i]);
+        }
+        word(root,str,n);
+        return str.toString();
+    }
+}
